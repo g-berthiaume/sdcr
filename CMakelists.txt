@@ -1,0 +1,91 @@
+#---------------------------------------------------------------------------------------
+# simple C project
+# G.Berthiaume - 2019
+#---------------------------------------------------------------------------------------
+
+# set minimum cmake version
+cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
+
+#-----------------------------------------------
+# Languages
+#-----------------------------------------------
+# project name and language
+project(sdrc VERSION 1.0.0 LANGUAGES C)
+
+
+# require C11
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_EXTENSIONS OFF)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+
+# flags 
+list(
+    APPEND flags
+    "-Wall"
+    "-Wextra"
+    "-Wpedantic"
+    "-pedantic-errors"
+    "-O2"
+    "-g"
+    "-ggdb"
+#    "-fsanitize=address" 
+#    "-fno-omit-frame-pointer"
+)
+message("[GAB] C compiler flags: ${CMAKE_C_FLAGS} ${flags}")
+
+
+#-----------------------------------------------
+# Build library 
+#-----------------------------------------------
+# generate a library from sources
+add_library(sdrc-lib
+    STATIC
+    ../src/sdrc.h
+    ../src/sdrc.c
+)
+target_compile_options(sdrc-lib
+    PRIVATE
+    ${flags}
+)
+
+#-----------------------------------------------
+# Build main 
+#-----------------------------------------------
+# Add excutable and link it with the library
+add_executable(sdrc-main ../src/main.c)
+target_link_libraries(sdrc-main sdrc-lib)
+target_compile_options(sdrc-main
+    PRIVATE
+    ${flags}
+)
+
+#-----------------------------------------------
+# Build test
+#-----------------------------------------------
+# testing binary
+add_executable(unittest_interface ../tests/unittest_interface.c)
+target_link_libraries(unittest_interface sdrc-lib)
+target_compile_options(unittest_interface
+    PRIVATE
+    ${flags}
+)
+
+add_executable(unittest_behavior ../tests/unittest_behavior.c)
+target_link_libraries(unittest_behavior sdrc-lib)
+target_compile_options(unittest_behavior
+    PRIVATE
+    ${flags}
+)
+
+# enable testing functionality
+enable_testing()
+
+# define tests
+add_test(
+    NAME Testing-sdrc-lib-1
+    COMMAND ./unittest_interface
+)
+add_test(
+    NAME Testing-sdrc-lib-2
+    COMMAND ./unittest_behavior
+)
