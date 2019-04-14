@@ -1,17 +1,16 @@
-/*
-
-*/
-//
-#include <stdio.h> //todo clean
+/* 
+ * main 
+ * An exmaple of the String Defined Call Routine library
+ */
+#include <stdio.h>
 #include <stdint.h>
-#include <stdbool.h>
 #include <time.h>
 
 // library
 #include "sdrc.h"
 
 #define DEBUG_PRINT(str) \
-    printf("%d - " str, get_tick_count_ms()) //TODO Delete
+    printf("%d - " str, get_tick_count_ms())
 
 // prototype
 static void toggle_red_led();
@@ -21,7 +20,9 @@ static uint32_t get_tick_count_ms();
 // Main
 int main()
 {
+    //
     // Example
+    //
     sdcr_status res = 0;
     res += sdcr_routine_new(.id = "red led",
                             .routine = "C..",
