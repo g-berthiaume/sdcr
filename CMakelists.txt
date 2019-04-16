@@ -51,13 +51,13 @@ target_compile_options(sdrc-lib
 #-----------------------------------------------
 # Build main 
 #-----------------------------------------------
-# Add excutable and link it with the library
-add_executable(sdrc-main ../src/main.c)
-target_link_libraries(sdrc-main sdrc-lib)
-target_compile_options(sdrc-main
-    PRIVATE
-    ${flags}
-)
+# Add executable and link it with the library
+# add_executable(sdrc-main ../src/main.c)
+# target_link_libraries(sdrc-main sdrc-lib)
+# target_compile_options(sdrc-main
+#     PRIVATE
+#     ${flags}
+# )
 
 #-----------------------------------------------
 # Build test
@@ -88,4 +88,15 @@ add_test(
 add_test(
     NAME Testing-sdrc-lib-2
     COMMAND ./unittest_behavior
+)
+
+#-----------------------------------------------
+# Build example
+#-----------------------------------------------
+# Add executable and link it with the library
+add_executable(sdrc-example1 ../example/simple.c)
+target_link_libraries(sdrc-example1 sdrc-lib)
+target_compile_options(sdrc-example1
+    PRIVATE
+    ${flags}
 )
