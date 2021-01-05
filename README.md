@@ -1,3 +1,5 @@
+Please note: This is a toy project built for learning pupose.
+
 # String Defined Call Routine library
 
 <p align="center"><img width=20% src="./.github/a_random_led_panel.jfif"></p>
